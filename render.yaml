@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: sprint-31-gantt-chart
+    env: static
+    buildCommand: ""
+    staticPublishPath: .
+    pullRequestPreviewsEnabled: false
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /Sprint_31_Gantt_Chart.html
