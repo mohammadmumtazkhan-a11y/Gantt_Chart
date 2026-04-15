@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>MITO & TicketSir — Sprint 31-32 Gantt</title>
+<style>
+:root {
+  --bg:        #0F1923;
+  --surface:   #162030;
+  --surface2:  #1C2B3A;
+  --surface3:  #233040;
+  --border:    #1E3048;
+  --border2:   #2A4060;
+  --text:      #E2EAF4;
+  --muted:     #5D7A96;
+  --muted2:    #3A5570;
+  --blue:      #2E75B6;
+  --blue-b:    #1A4A7A;
+  --done-bg:   #1A3A1A;
+  --done-fg:   #70C040;
+  --prog-bg:   #2A2000;
+  --prog-fg:   #FFC000;
+  --wait-bg:   #2A1010;
+  --wait-fg:   #FF5252;
+  --epic-fg:   #FFD700;
+  --row-h:     34px;
+  --epic-h:    38px;
+  --col1:      280px;
+  --col2:      100px;
+  --col3:      130px;
+  --col4:      160px;
+  --col5:      170px;
+  --col6:      140px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Segoe UI',Arial,sans-serif;font-size:12px;background:var(--bg);color:var(--text);min-height:100vh;}
+
+/* ── HEADER ── */
+.hdr{
+  background:linear-gradient(135deg,#0A1520 0%,#162030 100%);
+  border-bottom:1px solid var(--border);
+  padding:14px 20px 0;
+}
+.hdr-top{display:flex;justify-content:space-between;align-items:flex-start;}
+.hdr h1{font-size:15px;font-weight:700;color:var(--text);letter-spacing:.2px;}
+.hdr .sub{font-size:10px;color:var(--muted);margin-top:3px;}
+.hdr .proj-window{font-size:10px;color:var(--muted);text-align:right;}
+
+/* KPI strip */
+.kpi-strip{display:flex;gap:0;margin:14px -20px 0;border-top:1px solid var(--border);}
+.kpi{
+  flex:1;padding:10px 0;text-align:center;
+  border-right:1px solid var(--border);
+}
+.kpi:last-child{border-right:none;}
+.kpi .n{font-size:20px;font-weight:700;color:var(--text);}
+.kpi .n.done-c{color:#70C040;}
+.kpi .n.prog-c{color:#FFC000;}
+.kpi .n.wait-c{color:#FF5252;}
+.kpi .l{font-size:9px;text-transform:uppercase;letter-spacing:.6px;color:var(--muted);margin-top:2px;}
+
+/* ── TOOLBAR ── */
+.toolbar{
+  background:var(--surface);
+  border-bottom:1px solid var(--border);
+  padding:8px 20px;
+  display:flex;gap:12px;align-items:center;flex-wrap:wrap;
+  position:sticky;top:0;z-index:90;
+}
+.tb-label{font-size:10px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.4px;}
+.owner-pills{display:flex;gap:4px;flex-wrap:wrap;}
+.pill{
+  display:inline-flex;align-items:center;gap:4px;
+  padding:3px 10px;border-radius:12px;border:1px solid var(--border2);
+  font-size:10px;font-weight:600;cursor:pointer;
+  color:var(--muted);background:var(--surface2);
+  transition:all .15s;user-select:none;
+}
+.pill:hover{border-color:var(--blue);}
+.pill.active{background:var(--blue);border-color:var(--blue);color:#fff;}
+.pill .dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;}
+.tb-sep{width:1px;height:20px;background:var(--border2);}
+.tb-select{
+  background:var(--surface2);border:1px solid var(--border2);
+  color:var(--text);border-radius:6px;padding:4px 8px;font-size:10px;outline:none;
+}
+.tb-select:focus{border-color:var(--blue);}
+.tb-search{
+  background:var(--surface2);border:1px solid var(--border2);
+  color:var(--text);border-radius:6px;padding:4px 10px;font-size:10px;
+  outline:none;width:140px;
+}
+.tb-search::placeholder{color:var(--muted2);}
+.tb-search:focus{border-color:var(--blue);}
+.legend{margin-left:auto;display:flex;gap:10px;align-items:center;}
+.leg{display:flex;align-items:center;gap:5px;font-size:9px;color:var(--muted);}
+.leg-sq{width:10px;height:10px;border-radius:2px;}
+
+/* ── TABLE ── */
+.tbl-wrap{overflow-x:auto;}
+table{border-collapse:collapse;width:100%;min-width:1060px;}
+thead th{
+  background:var(--surface2);
+  color:var(--muted);font-size:9px;font-weight:700;
+  text-transform:uppercase;letter-spacing:.5px;
+  padding:8px 10px;border-bottom:2px solid var(--border2);
+  position:sticky;top:0;z-index:80;white-space:nowrap;
+  border-right:1px solid var(--border);
+}
+thead th:first-child{text-align:left;}
+thead th:last-child{border-right:none;}
+
+/* ── EPIC ROW ── */
+tr.epic-row td{
+  background:var(--surface2);
+  border-top:2px solid var(--border2);
+  border-bottom:1px solid var(--border2);
+  padding:0;height:var(--epic-h);
+}
+tr.epic-row.collapsed-epic + tr:not(.epic-row){display:none;}
+
+.epic-cell{
+  display:flex;align-items:center;gap:8px;
+  padding:0 10px;height:100%;cursor:pointer;
+  user-select:none;
+}
+.epic-arrow{font-size:9px;color:var(--muted);transition:transform .2s;}
+.epic-icon{font-size:13px;}
+.epic-name{font-size:12px;font-weight:700;color:#FFD700;letter-spacing:.1px;}
+.epic-count{font-size:9px;color:var(--muted);margin-left:2px;}
+
+/* ── TASK ROW ── */
+tr.task-row td{
+  height:var(--row-h);
+  border-bottom:1px solid var(--border);
+  padding:0;
+  border-right:1px solid var(--border);
+}
+tr.task-row td:last-child{border-right:none;}
+tr.task-row:hover td{background:rgba(46,117,182,.08)!important;}
+
+/* alternating */
+tr.task-row.r-even td{background:var(--surface);}
+tr.task-row.r-odd  td{background:var(--bg);}
+
+/* ── COL: TASK NAME ── */
+.task-cell{
+  display:flex;align-items:center;gap:7px;
+  padding:0 10px 0 24px;height:100%;
+  white-space:nowrap;overflow:hidden;
+}
+.task-bullet{width:5px;height:5px;border-radius:50%;background:var(--muted2);flex-shrink:0;}
+.task-name{font-size:11px;color:var(--text);overflow:hidden;text-overflow:ellipsis;}
+.task-id{font-size:9px;color:var(--muted2);}
+
+/* ── COL: OWNER ── */
+.owner-cell{display:flex;align-items:center;justify-content:center;height:100%;gap:6px;padding:0 6px;}
+.avatar{
+  width:24px;height:24px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:8px;font-weight:700;flex-shrink:0;
+  border:1.5px solid rgba(255,255,255,.15);
+}
+.owner-name{font-size:10px;color:var(--muted);}
+
+/* ── COL: STATUS ── */
+.status-cell{display:flex;align-items:center;justify-content:center;height:100%;padding:0 6px;}
+.badge{
+  display:inline-flex;align-items:center;gap:4px;
+  padding:3px 8px;border-radius:12px;
+  font-size:9px;font-weight:700;white-space:nowrap;
+}
+.badge.done{background:var(--done-bg);color:var(--done-fg);border:1px solid #2A5A1A;}
+.badge.prog{background:var(--prog-bg);color:var(--prog-fg);border:1px solid #4A3800;}
+.badge.wait{background:var(--wait-bg);color:var(--wait-fg);border:1px solid #4A1010;}
+.badge-icon{font-size:10px;}
+
+/* ── COL: PROGRESS ── */
+.progress-cell{display:flex;align-items:center;gap:8px;padding:0 10px;height:100%;}
+.prog-bar-wrap{flex:1;height:6px;background:var(--surface3);border-radius:3px;overflow:hidden;}
+.prog-bar{height:100%;border-radius:3px;transition:width .3s;}
+.prog-pct{font-size:10px;font-weight:700;min-width:28px;text-align:right;}
+.prog-pct.done-c{color:var(--done-fg);}
+.prog-pct.prog-c{color:var(--prog-fg);}
+.prog-pct.wait-c{color:var(--muted);}
+
+/* ── COL: DATES ── */
+.dates-cell{display:flex;flex-direction:column;justify-content:center;padding:0 10px;height:100%;gap:1px;}
+.date-range{font-size:9px;color:var(--muted);white-space:nowrap;}
+.date-range span{color:var(--text);}
+
+/* ── COL: DEPENDENCIES ── */
+.dep-cell{display:flex;align-items:center;padding:0 8px;height:100%;gap:4px;flex-wrap:wrap;}
+.dep-tag{
+  font-size:8px;font-weight:700;padding:1px 5px;border-radius:4px;
+  background:rgba(255,192,0,.15);color:#FFC000;border:1px solid rgba(255,192,0,.3);
+  white-space:nowrap;
+}
+
+/* ── COL: TIMELINE ── */
+.timeline-cell{position:relative;height:100%;padding:0;}
+.tl-track{position:absolute;inset:0;overflow:hidden;}
+.tl-bar{
+  position:absolute;
+  top:50%;transform:translateY(-50%);
+  height:10px;border-radius:3px;
+  min-width:3px;
+}
+.tl-fill{
+  position:absolute;top:0;left:0;bottom:0;
+  border-radius:3px 0 0 3px;
+  opacity:.4;
+}
+.tl-pct-label{
+  position:absolute;right:3px;top:50%;transform:translateY(-50%);
+  font-size:8px;font-weight:700;color:#fff;
+  text-shadow:0 1px 2px rgba(0,0,0,.6);
+  white-space:nowrap;
+}
+.tl-owner-label{
+  position:absolute;left:4px;top:50%;transform:translateY(-50%);
+  font-size:8px;font-weight:700;color:#fff;
+  text-shadow:0 1px 3px rgba(0,0,0,.8);
+  white-space:nowrap;overflow:hidden;
+  pointer-events:none;
+  display:flex;align-items:center;gap:3px;
+}
+.tl-owner-dot{
+  width:6px;height:6px;border-radius:50%;
+  flex-shrink:0;border:1px solid rgba(255,255,255,.4);
+}
+.tl-month-line{
+  position:absolute;top:0;bottom:0;width:1px;
+  background:var(--border);z-index:1;
+}
+.today-tick{
+  position:absolute;top:0;bottom:0;width:2px;
+  background:#FF3B30;z-index:5;
+}
+
+/* ── EPIC PROGRESS ── */
+.epic-progress-cell{display:flex;align-items:center;gap:8px;padding:0 10px;height:100%;}
+.epic-prog-wrap{flex:1;height:4px;background:var(--surface3);border-radius:2px;overflow:hidden;}
+.epic-prog-bar{height:100%;border-radius:2px;}
+
+/* ── TOOLTIP ── */
+#tt{
+  position:fixed;pointer-events:none;
+  background:#0A1520;border:1px solid var(--border2);
+  border-radius:8px;padding:12px 14px;
+  font-size:11px;line-height:1.7;
+  box-shadow:0 8px 24px rgba(0,0,0,.6);
+  z-index:999;max-width:280px;display:none;
+}
+#tt .tt-title{font-size:12px;font-weight:700;color:var(--text);margin-bottom:6px;border-bottom:1px solid var(--border2);padding-bottom:6px;}
+#tt .tt-row{display:flex;justify-content:space-between;gap:12px;font-size:10px;}
+#tt .tt-key{color:var(--muted);}
+#tt .tt-val{color:var(--text);font-weight:600;text-align:right;}
+#tt .tt-dep{color:#FFC000;font-size:9px;margin-top:6px;border-top:1px solid var(--border2);padding-top:6px;}
+
+/* ── FOOTER ── */
+.footer{
+  background:var(--surface);border-top:1px solid var(--border);
+  padding:10px 20px;font-size:9px;color:var(--muted);
+  display:flex;justify-content:space-between;align-items:center;
+  margin-top:20px;
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="hdr">
+  <div class="hdr-top">
+    <div>
+      <div class="h1" style="font-size:15px;font-weight:700;color:#E2EAF4;">MITO &amp; TicketSir — Sprint 31 Gantt</div>
+      <div class="sub">High-Level Timeline for Stakeholders &nbsp;·&nbsp; Generated 7 Apr 2026</div>
+    </div>
+    <div class="proj-window">
+      <div style="font-size:9px;color:#5D7A96;">Project Window</div>
+      <div style="font-size:11px;font-weight:600;color:#E2EAF4;">15 Nov 2025 – 28 Apr 2026</div>
+    </div>
+  </div>
+  <div class="kpi-strip">
+    <div class="kpi"><div class="n">43</div><div class="l">Total Tasks</div></div>
+    <div class="kpi"><div class="n done-c">17</div><div class="l">Completed</div></div>
+    <div class="kpi"><div class="n prog-c">17</div><div class="l">In Progress</div></div>
+    <div class="kpi"><div class="n wait-c">9</div><div class="l">Not Started</div></div>
+    <div class="kpi"><div class="n">66%</div><div class="l">Avg Progress</div></div>
+    <div class="kpi"><div class="n" style="color:#93B8D8;">7</div><div class="l">Team Members</div></div>
+  </div>
+</div>
+
+<!-- TOOLBAR -->
+<div class="toolbar">
+  <span class="tb-label">Owner</span>
+  <div class="owner-pills" id="ownerPills">
+    <span class="pill active" data-owner="all">All</span>
+    <span class="pill" data-owner="Iyanu">   <span class="dot" style="background:#C05B8A"></span>Iyanu</span>
+    <span class="pill" data-owner="Jayant">  <span class="dot" style="background:#2E75B6"></span>Jayant</span>
+    <span class="pill" data-owner="Monu">    <span class="dot" style="background:#4BACC6"></span>Monu</span>
+    <span class="pill" data-owner="Rishabh"> <span class="dot" style="background:#7030A0"></span>Rishabh</span>
+    <span class="pill" data-owner="Robin">   <span class="dot" style="background:#FF7C00"></span>Robin</span>
+    <span class="pill" data-owner="Sakshi">  <span class="dot" style="background:#E36C09"></span>Sakshi</span>
+    <span class="pill" data-owner="Vakil">   <span class="dot" style="background:#375623"></span>Vakil</span>
+  </div>
+  <div class="tb-sep"></div>
+  <span class="tb-label">Status</span>
+  <select class="tb-select" id="statusSel">
+    <option value="all">All Statuses</option>
+    <option>Completed</option>
+    <option>In Progress</option>
+    <option>Not Started</option>
+  </select>
+  <div class="tb-sep"></div>
+  <input class="tb-search" id="searchBox" placeholder="Search tasks…"/>
+  <div class="legend">
+    <div class="leg"><div class="leg-sq" style="background:#70C040"></div>Completed</div>
+    <div class="leg"><div class="leg-sq" style="background:#FFC000"></div>In Progress</div>
+    <div class="leg"><div class="leg-sq" style="background:#FF5252"></div>Not Started</div>
+    <div class="leg"><div class="leg-sq" style="background:#FF3B30;width:3px;height:12px;border-radius:1px;"></div>Today</div>
+  </div>
+</div>
+
+<!-- TABLE -->
+<div class="tbl-wrap">
+<table id="mainTable">
+<thead>
+  <tr>
+    <th style="width:280px;text-align:left;">Task / Feature</th>
+    <th style="width:110px;">Owner</th>
+    <th style="width:130px;">Status</th>
+    <th style="width:160px;">Progress</th>
+    <th style="width:130px;">Dates</th>
+    <th style="width:120px;">Depends On</th>
+    <th style="min-width:180px;">Timeline</th>
+  </tr>
+</thead>
+<tbody id="tbody"></tbody>
+</table>
+</div>
+
+<div class="footer">
+  <span>MITO &amp; TicketSir · Sprint 31-32 · Confidential</span>
+  <span>15 Nov 2025 – 28 Apr 2026</span>
+</div>
+
+<div id="tt"></div>
+
+<script>
+const PROJECT_START = new Date("2025-11-15");
+const PROJECT_END   = new Date("2026-04-28");
+const TODAY         = new Date("2026-04-15");
+
+const TOTAL_DAYS = (PROJECT_END - PROJECT_START) / 864e5 + 1;
+
+const OWNER_CLR = {
+  Iyanu:   "#C05B8A", Jayant: "#2E75B6", Monu:   "#4BACC6",
+  Rishabh: "#7030A0", Robin:  "#FF7C00", Sakshi: "#E36C09", Vakil: "#375623"
+};
+
+function dayOff(s){ return (new Date(s) - PROJECT_START) / 864e5; }
+function tlLeft(s){ return (dayOff(s) / TOTAL_DAYS * 100).toFixed(3) + "%"; }
+function tlWidth(s,e){
+  const d = Math.max(1,(new Date(e)-new Date(s))/864e5+1);
+  return (d/TOTAL_DAYS*100).toFixed(3)+"%";
+}
+function fmtD(s){
+  return new Date(s).toLocaleDateString("en-GB",{day:"2-digit",month:"short",year:"2-digit"});
+}
+function sc(status){
+  if(status==="Completed")  return "done";
+  if(status==="In Progress")return "prog";
+  return "wait";
+}
+function barColor(status){
+  if(status==="Completed")  return "#70C040";
+  if(status==="In Progress")return "#FFC000";
+  return "#FF5252";
+}
+function barGrad(status){
+  if(status==="Completed")  return "linear-gradient(90deg,#3A7A20,#70C040)";
+  if(status==="In Progress")return "linear-gradient(90deg,#B08000,#FFC000)";
+  return "linear-gradient(90deg,#A02020,#FF5252)";
+}
+function progBarColor(pct){
+  if(pct===100) return "linear-gradient(90deg,#3A7A20,#70C040)";
+  if(pct>=70)   return "linear-gradient(90deg,#4BACC6,#70C040)";
+  if(pct>=30)   return "linear-gradient(90deg,#B08000,#FFC000)";
+  if(pct>0)     return "linear-gradient(90deg,#A02020,#FF5252)";
+  return "#2A4060";
+}
+function badgeHTML(status){
+  const cls = sc(status);
+  const icon = status==="Completed" ? "✓" : status==="In Progress" ? "●" : "○";
+  return `<span class="badge ${cls}"><span class="badge-icon">${icon}</span>${status}</span>`;
+}
+
+// month lines for timeline col
+function monthLines(){
+  let html=""; let cur=new Date(PROJECT_START.getFullYear(),PROJECT_START.getMonth(),1);
+  while(cur<=PROJECT_END){
+    const off = dayOff(cur);
+    if(off>=0){
+      html+=`<div class="tl-month-line" style="left:${(off/TOTAL_DAYS*100).toFixed(3)}%"></div>`;
+    }
+    cur=new Date(cur.getFullYear(),cur.getMonth()+1,1);
+  }
+  // today
+  const todayOff = dayOff(TODAY);
+  html+=`<div class="today-tick" style="left:${(todayOff/TOTAL_DAYS*100).toFixed(3)}%"></div>`;
+  return html;
+}
+const MONTH_LINES = monthLines();
+
+const EPICS = [
+  {id:"E1", name:"TicketSir",           pct:87,  icon:"📁", tasks:["T01","T02","T03","T04","T05"]},
+  {id:"E2", name:"Rhemito",             pct:77,  icon:"📁", tasks:["T06","T07","T08","T09","T10","T11","T12","T13","T14"]},
+  {id:"E3", name:"Affiliate Dashboard", pct:80,  icon:"📁", tasks:["T15","T16","T17","T18"]},
+  {id:"E4", name:"Role Based Login",    pct:100, icon:"📁", tasks:["T19","T20"]},
+  {id:"E5", name:"OBO",                 pct:85,  icon:"📁", tasks:["T21","T22"]},
+  {id:"E6", name:"Rate Manager",        pct:46,  icon:"📁", tasks:["T23","T24","T25","T26","T27"]},
+  {id:"E7", name:"Customer Support",    pct:85,  icon:"📁", tasks:["T28","T29"]},
+  {id:"E8", name:"Affiliate",           pct:88,  icon:"📁", tasks:["T30","T31","T32","T33"]},
+  {id:"E9", name:"MITO-Admin",          pct:100, icon:"📁", tasks:["T34"]},
+  {id:"E10",name:"Standalone",          pct:70,  icon:"📁", tasks:["T35"]},
+  {id:"E11",name:"Testing",             pct:73,  icon:"📁", tasks:["T36","T37","T38","T39","T40","T41","T42","T43"]},
+];
+
+const TASKS = {
+  T01:{n:"TicketSir Bug Fixes",           o:"Rishabh",s:"Not Started",p:0,  start:"2026-02-13",end:"2026-02-13",dep:[]},
+  T02:{n:"7998 – Pre-sale & Waitlist Booking (Mobile)",o:"Jayant", s:"Completed", p:100,start:"2026-02-24",end:"2026-02-24",dep:[]},
+  T03:{n:"Label Changes",                 o:"Jayant", s:"Completed", p:100,start:"2026-02-24",end:"2026-02-24",dep:[]},
+  T04:{n:"7839 – Biometric Login (TicketSir & Cokobar)",o:"Jayant",s:"In Progress",p:95, start:"2026-02-10",end:"2026-03-24",dep:[]},
+  T05:{n:"7923 – DB Migration of TicketSir",o:"Rishabh",s:"In Progress",p:80,start:"2026-03-03",end:"2026-04-10",dep:[]},
+  T06:{n:"Rhemito Bug Fixes – Backend",   o:"Rishabh",s:"Completed", p:100,start:"2026-02-06",end:"2026-02-06",dep:[]},
+  T07:{n:"Rhemito Bug Fixes – Front end: Web",o:"Monu",s:"Completed", p:100,start:"2026-02-19",end:"2026-03-02",dep:["T06"]},
+  T08:{n:"Rhemito Bug Fixes – Mobile App",o:"Jayant", s:"Completed", p:100,start:"2026-02-25",end:"2026-03-06",dep:["T06"]},
+  T09:{n:"Notification – Backend",        o:"Rishabh",s:"In Progress",p:70, start:"2026-04-10",end:"2026-04-10",dep:[]},
+  T10:{n:"Notification – Front end: Web", o:"Monu",   s:"Completed", p:100,start:"2026-04-02",end:"2026-04-03",dep:["T09"]},
+  T11:{n:"Notification – Mobile App",     o:"Jayant", s:"In Progress",p:50, start:"2026-03-25",end:"2026-04-14",dep:["T09"]},
+  T12:{n:"7744 – Pay by Bank & Bank Transfer",o:"Vakil",s:"Not Started",p:0,start:"2026-02-19",end:"2026-02-19",dep:[]},
+  T13:{n:"Rhemito-MobileApp: Help Tickets",o:"Jayant",s:"In Progress",p:10, start:"2026-03-26",end:"2026-03-31",dep:[]},
+  T14:{n:"8057: KYC Bug Fixes",           o:"Vakil",  s:"Not Started",p:0,  start:"2026-02-19",end:"2026-02-19",dep:[]},
+  T15:{n:"7986 – Design",                 o:"Iyanu",  s:"Not Started",p:0,  start:"2026-02-12",end:"2026-02-15",dep:[]},
+  T16:{n:"7986 – Backend",                o:"Sakshi", s:"Completed", p:100,start:"2026-02-12",end:"2026-02-12",dep:[]},
+  T17:{n:"7986 – Frontend: Web",          o:"Monu",   s:"Not Started",p:0,  start:"2026-02-12",end:"2026-02-12",dep:["T15","T16"]},
+  T18:{n:"OnePipe Enhancement",           o:"Vakil",  s:"In Progress",p:90, start:"2026-02-19",end:"2026-03-10",dep:["T16"]},
+  T19:{n:"7996 – Backend",                o:"Sakshi", s:"Completed", p:100,start:"2026-02-19",end:"2026-03-24",dep:[]},
+  T20:{n:"7996 – Frontend",               o:"Monu",   s:"Completed", p:100,start:"2026-02-19",end:"2026-03-03",dep:["T19"]},
+  T21:{n:"OBO – Backend",                 o:"Rishabh",s:"Completed", p:100,start:"2026-02-19",end:"2026-04-01",dep:[]},
+  T22:{n:"OBO – Frontend",                o:"Monu",   s:"In Progress",p:65, start:"2026-02-19",end:"2026-03-16",dep:["T21"]},
+  T23:{n:"Backend – Config Setup",        o:"Sakshi", s:"Completed", p:100,start:"2026-03-09",end:"2026-03-16",dep:[]},
+  T24:{n:"Backend – Overrides",           o:"Sakshi", s:"Completed", p:100,start:"2026-03-17",end:"2026-03-24",dep:["T23"]},
+  T25:{n:"Backend – Cross Rates",         o:"Sakshi", s:"In Progress",p:80, start:"2026-03-25",end:"2026-04-10",dep:["T24"]},
+  T26:{n:"Backend – Existing Affiliate Migration",o:"Sakshi",s:"Not Started",p:0,start:"2026-04-14",end:"2026-04-28",dep:["T25"]},
+  T27:{n:"Frontend",                      o:"Monu",   s:"In Progress",p:20, start:"2026-02-19",end:"2026-04-10",dep:["T23"]},
+  T28:{n:"Backend",                       o:"Rishabh",s:"Completed", p:100,start:"2026-03-25",end:"2026-03-30",dep:[]},
+  T29:{n:"Front end",                     o:"Monu",   s:"In Progress",p:80, start:"2026-03-25",end:"2026-04-08",dep:["T28"]},
+  T30:{n:"AirPeace Payment Pages / V2 Changes",o:"Vakil",s:"Completed",p:100,start:"2026-02-19",end:"2026-02-19",dep:[]},
+  T31:{n:"Refund Enhancement",            o:"Vakil",  s:"In Progress",p:90, start:"2026-02-26",end:"2026-02-28",dep:[]},
+  T32:{n:"Account Switching: Biz ↔ Individual",o:"Vakil",s:"Not Started",p:0,start:"2026-02-25",end:"2026-02-28",dep:[]},
+  T33:{n:"Interswitch-Payout",            o:"Sakshi", s:"In Progress",p:90, start:"2025-11-15",end:"2026-02-24",dep:[]},
+  T34:{n:"7811 – Movement to Retail Submission: Bug Fixes",o:"Sakshi",s:"Completed",p:100,start:"2026-02-19",end:"2026-02-19",dep:[]},
+  T35:{n:"Help Tickets Mobile App (Update)",o:"Jayant",s:"In Progress",p:70,start:"2026-03-26",end:"2026-04-08",dep:["T13"]},
+  T36:{n:"7925 – Interswitch Testing",    o:"Robin",  s:"In Progress",p:60, start:"2026-03-20",end:"2026-04-03",dep:["T33"]},
+  T37:{n:"8002: TicketSir Pre-sale & Waitlist App Testing",o:"Robin",s:"Completed",p:100,start:"2026-02-25",end:"2026-02-25",dep:["T02"]},
+  T38:{n:"8054: Date Caption Changes Testing",o:"Robin",s:"Not Started",p:0,start:"2026-02-26",end:"2026-02-26",dep:["T03"]},
+  T39:{n:"Role Based Testing",            o:"Robin",  s:"Completed", p:100,start:"2026-03-13",end:"2026-03-24",dep:["T19","T20"]},
+  T40:{n:"OBO Testing",                   o:"Robin",  s:"In Progress",p:50, start:"2026-03-18",end:"2026-04-14",dep:["T21","T22"]},
+  T41:{n:"Help Tickets Web Testing",      o:"Robin",  s:"In Progress",p:75, start:"2026-04-03",end:"2026-04-08",dep:["T29"]},
+  T42:{n:"Help Tickets App Testing",      o:"Robin",  s:"Not Started",p:0,  start:"2026-04-08",end:"2026-04-09",dep:["T35"]},
+  T43:{n:"TicketSir DB Migration Testing",o:"Robin",  s:"In Progress",p:80, start:"2026-03-13",end:"2026-04-10",dep:["T05"]},
+};
+
+// ── BUILD TABLE ──────────────────────────────────────────────────────────────
+const tbody = document.getElementById("tbody");
+
+EPICS.forEach(epic => {
+  const epicTasks = epic.tasks;
+
+  // ── epic row ──
+  const epicTr = document.createElement("tr");
+  epicTr.className = "epic-row";
+  epicTr.dataset.epicId = epic.id;
+  epicTr.dataset.collapsed = "0";
+
+  // compute epic date range
+  const allStarts = epicTasks.map(tid => new Date(TASKS[tid].start));
+  const allEnds   = epicTasks.map(tid => new Date(TASKS[tid].end));
+  const eStart    = new Date(Math.min(...allStarts));
+  const eEnd      = new Date(Math.max(...allEnds));
+
+  const statusLabel = epic.pct===100?"Completed":epic.pct>0?"In Progress":"Not Started";
+
+  epicTr.innerHTML = `
+    <td colspan="1">
+      <div class="epic-cell" onclick="toggleEpic('${epic.id}',this)">
+        <span class="epic-arrow">▼</span>
+        <span class="epic-icon">${epic.icon}</span>
+        <span class="epic-name">${epic.name}</span>
+        <span class="epic-count">(${epicTasks.length})</span>
+      </div>
+    </td>
+    <td style="text-align:center;padding:0 6px;">
+      <span style="font-size:9px;color:#5D7A96;">—</span>
+    </td>
+    <td style="padding:0 6px;text-align:center;">${badgeHTML(statusLabel)}</td>
+    <td>
+      <div class="epic-progress-cell">
+        <div class="epic-prog-wrap">
+          <div class="epic-prog-bar" style="width:${epic.pct}%;background:${barColor(statusLabel)};"></div>
+        </div>
+        <span class="prog-pct ${sc(statusLabel)+'-c'}" style="font-size:11px;font-weight:700;">${epic.pct}%</span>
+      </div>
+    </td>
+    <td>
+      <div class="dates-cell" style="font-size:9px;">
+        <span class="date-range"><span>${fmtD(eStart)}</span></span>
+        <span class="date-range"><span>${fmtD(eEnd)}</span></span>
+      </div>
+    </td>
+    <td></td>
+    <td class="timeline-cell">
+      <div class="tl-track">
+        ${MONTH_LINES}
+        <div class="tl-bar" style="left:${tlLeft(eStart)};width:${tlWidth(eStart,eEnd)};background:${barColor(statusLabel)};opacity:.35;height:6px;">
+          <div class="tl-fill" style="width:${epic.pct}%;background:${barColor(statusLabel)};opacity:.8;"></div>
+        </div>
+        <div class="tl-pct-label">${epic.pct}%</div>
+      </div>
+    </td>`;
+  tbody.appendChild(epicTr);
+
+  // ── task rows ──
+  epicTasks.forEach((tid, idx) => {
+    const t = TASKS[tid];
+    const oc = OWNER_CLR[t.o] || "#555";
+    const cls = sc(t.s);
+    const tr = document.createElement("tr");
+    tr.className = `task-row ${idx%2===0?"r-even":"r-odd"}`;
+    tr.dataset.epic   = epic.id;
+    tr.dataset.owner  = t.o;
+    tr.dataset.status = t.s;
+    tr.dataset.name   = t.n.toLowerCase();
+    tr.dataset.tid    = tid;
+
+    const depTags = t.dep.map(d=>`<span class="dep-tag">${d}</span>`).join("");
+
+    tr.innerHTML = `
+      <td>
+        <div class="task-cell">
+          <div class="task-bullet" style="background:${oc};opacity:.7;"></div>
+          <span class="task-name" title="${t.n}">${t.n}</span>
+        </div>
+      </td>
+      <td>
+        <div class="owner-cell">
+          <div class="avatar" style="background:${oc};">${t.o[0]}</div>
+          <span class="owner-name">${t.o}</span>
+        </div>
+      </td>
+      <td><div class="status-cell">${badgeHTML(t.s)}</div></td>
+      <td>
+        <div class="progress-cell">
+          <div class="prog-bar-wrap">
+            <div class="prog-bar" style="width:${t.p}%;background:${progBarColor(t.p)};"></div>
+          </div>
+          <span class="prog-pct ${cls+'-c'}">${t.p}%</span>
+        </div>
+      </td>
+      <td>
+        <div class="dates-cell">
+          <span class="date-range"><span>${fmtD(t.start)}</span></span>
+          <span class="date-range" style="color:#3A5570;">→ <span>${fmtD(t.end)}</span></span>
+        </div>
+      </td>
+      <td><div class="dep-cell">${depTags||'<span style="color:#2A4060;font-size:9px;">—</span>'}</div></td>
+      <td class="timeline-cell" data-tid="${tid}">
+        <div class="tl-track">
+          ${MONTH_LINES}
+          <div class="tl-bar ${cls}-bar"
+               style="left:${tlLeft(t.start)};width:${tlWidth(t.start,t.end)};background:${barColor(t.s)};min-width:36px;">
+            <div class="tl-fill" style="width:${t.p}%;background:${barColor(t.s)};"></div>
+            <div class="tl-owner-label">
+              <div class="tl-owner-dot" style="background:${oc};"></div>
+              <span>${t.o}</span>
+            </div>
+            ${t.p>0?`<div class="tl-pct-label">${t.p}%</div>`:""}
+          </div>
+        </div>
+      </td>`;
+    tbody.appendChild(tr);
+  });
+});
+
+// ── collapse/expand ──────────────────────────────────────────────────────────
+function toggleEpic(epicId, el){
+  const arrow = el.querySelector(".epic-arrow");
+  const rows  = document.querySelectorAll(`tr.task-row[data-epic="${epicId}"]`);
+  const epicTr = document.querySelector(`tr.epic-row[data-epic-id="${epicId}"]`);
+  const isCollapsed = epicTr.dataset.collapsed === "1";
+  rows.forEach(r => r.style.display = isCollapsed ? "" : "none");
+  epicTr.dataset.collapsed = isCollapsed ? "0" : "1";
+  arrow.textContent = isCollapsed ? "▼" : "▶";
+}
+
+// ── sticky header offset ─────────────────────────────────────────────────────
+function fixHeaderTop(){
+  const toolbarH = document.querySelector(".toolbar").getBoundingClientRect().height;
+  document.querySelectorAll("thead th").forEach(th => {
+    th.style.top = toolbarH + "px";
+  });
+}
+fixHeaderTop();
+window.addEventListener("resize", fixHeaderTop);
+
+// ── filters ──────────────────────────────────────────────────────────────────
+document.querySelectorAll(".pill").forEach(pill => {
+  pill.addEventListener("click", () => {
+    document.querySelectorAll(".pill").forEach(p=>p.classList.remove("active"));
+    pill.classList.add("active");
+    applyFilters();
+  });
+});
+document.getElementById("statusSel").addEventListener("change", applyFilters);
+document.getElementById("searchBox").addEventListener("input", applyFilters);
+
+function applyFilters(){
+  const owner  = document.querySelector(".pill.active").dataset.owner;
+  const status = document.getElementById("statusSel").value;
+  const search = document.getElementById("searchBox").value.toLowerCase().trim();
+
+  document.querySelectorAll("tr.task-row").forEach(tr => {
+    const ownerOk  = owner==="all"  || tr.dataset.owner===owner;
+    const statusOk = status==="all" || tr.dataset.status===status;
+    const searchOk = !search        || tr.dataset.name.includes(search);
+    tr.style.display = (ownerOk && statusOk && searchOk) ? "" : "none";
+  });
+}
+
+// ── tooltip ──────────────────────────────────────────────────────────────────
+const tt = document.getElementById("tt");
+document.addEventListener("mousemove", e => {
+  const cell = e.target.closest("td[data-tid], tr.task-row td");
+  const tr   = e.target.closest("tr.task-row");
+  if(!tr){ tt.style.display="none"; return; }
+  const tid = tr.dataset.tid;
+  if(!tid){ tt.style.display="none"; return; }
+  const t = TASKS[tid];
+  if(!t){ tt.style.display="none"; return; }
+
+  const depStr = t.dep.length
+    ? t.dep.map(d=>`<span style="color:#FFC000">${d}</span> ${TASKS[d]?.n||""}`).join("<br>")
+    : "None";
+
+  tt.style.display="block";
+  tt.style.left=(e.clientX+16)+"px";
+  tt.style.top =(e.clientY-10)+"px";
+  tt.innerHTML=`
+    <div class="tt-title">${t.n}</div>
+    <div class="tt-row"><span class="tt-key">Owner</span><span class="tt-val">${t.o}</span></div>
+    <div class="tt-row"><span class="tt-key">Status</span><span class="tt-val">${badgeHTML(t.s)}</span></div>
+    <div class="tt-row"><span class="tt-key">Progress</span><span class="tt-val">${t.p}%</span></div>
+    <div class="tt-row"><span class="tt-key">Start</span><span class="tt-val">${fmtD(t.start)}</span></div>
+    <div class="tt-row"><span class="tt-key">End</span><span class="tt-val">${fmtD(t.end)}</span></div>
+    <div class="tt-dep">⬡ Depends on:<br>${depStr}</div>`;
+});
+document.addEventListener("mouseleave", ()=>{ tt.style.display="none"; });
+</script>
+</body>
+</html>
