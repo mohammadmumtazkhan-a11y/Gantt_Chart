@@ -415,96 +415,81 @@ function monthLines(){
 const MONTH_LINES = monthLines();
 
 const EPICS = [
-  {id:"E1", name:"TicketSir",                    pct:87,  icon:"📁", tasks:["T01","T02","T03","T04","T05"]},
-  {id:"E2", name:"Rhemito – Bug Fixes",          pct:100, icon:"📁", tasks:["T06","T07","T08"]},
-  {id:"E3", name:"Rhemito – Notifications",      pct:90,  icon:"📁", tasks:["T09","T10","T11"]},
-  {id:"E4", name:"Rhemito – Other",              pct:25,  icon:"📁", tasks:["T12","T13","T14","T15"]},
-  {id:"E5", name:"Affiliate Dashboard – OnePipe",pct:48,  icon:"📁", tasks:["T16","T17","T18","T19"]},
-  {id:"E6", name:"Role Based Login (MITO Admin)",pct:100, icon:"📁", tasks:["T20","T21"]},
-  {id:"E7", name:"OBO",                          pct:80,  icon:"📁", tasks:["T22","T23"]},
-  {id:"E8", name:"Rate Manager",                 pct:64,  icon:"📁", tasks:["T24","T25","T26","T27","T28"]},
-  {id:"E9", name:"Customer Support Portal",      pct:100, icon:"📁", tasks:["T29","T30"]},
-  {id:"E10",name:"Affiliate Operations",         pct:63,  icon:"📁", tasks:["T31","T32","T33","T34","T35","T36","T37"]},
-  {id:"E11",name:"MITO-Admin",                   pct:100, icon:"📁", tasks:["T38"]},
-  {id:"E12",name:"Testing (QA)",                 pct:68,  icon:"📁", tasks:["T39","T40","T41","T42","T43","T44","T45","T46","T47"]},
-  {id:"E13",name:"Integrations",                 pct:75,  icon:"📁", tasks:["T48","T49"]},
+  {id:"E1", name:"TicketSir", pct:87, icon:"📁", tasks:["T01","T02","T03","T04","T05"]},
+  {id:"E2", name:"Rhemito", pct:100, icon:"📁", tasks:["T06","T07","T08","T09","T10","T11","T12","T13"]},
+  {id:"E3", name:"7744 – Pay by Bank & Bank Transfer for New Customers", pct:0, icon:"📁", tasks:[]},
+  {id:"E4", name:"Rhemito-MobileApp: Help Tickets", pct:100, icon:"📁", tasks:[]},
+  {id:"E5", name:"Manual Bank Transfer", pct:100, icon:"📁", tasks:["T14","T15"]},
+  {id:"E6", name:"8057: KYC Bug Fixes", pct:0, icon:"📁", tasks:[]},
+  {id:"E7", name:"Mobile APP: Resend Transaction", pct:0, icon:"📁", tasks:[]},
+  {id:"E8", name:"Cancel Transaction", pct:0, icon:"📁", tasks:["T16","T17","T18"]},
+  {id:"E9", name:"7986 – Affiliate Dashboard (OnePipe Integration)", pct:73, icon:"📁", tasks:["T19","T20","T21","T22","T23"]},
+  {id:"E10", name:"7996 – Role based Login on Mito Admin", pct:100, icon:"📁", tasks:["T24","T25"]},
+  {id:"E11", name:"OBO", pct:75, icon:"📁", tasks:["T26","T27"]},
+  {id:"E12", name:"Rate Manager", pct:66, icon:"📁", tasks:["T28","T29","T30","T31","T32"]},
+  {id:"E13", name:"Customer support portal", pct:100, icon:"📁", tasks:["T33","T34"]},
+  {id:"E14", name:"Affiliate", pct:83, icon:"📁", tasks:["T35","T36","T37","T38","T39","T40","T41"]},
+  {id:"E15", name:"MITO-Admin", pct:32, icon:"📁", tasks:["T42","T43"]},
+  {id:"E16", name:"Testing", pct:64, icon:"📁", tasks:["T44","T45","T46","T47","T48","T49","T50","T51","T52"]},
+  {id:"E17", name:"Integrations", pct:74, icon:"📁", tasks:["T53","T54","T55"]},
 ];
 
 const TASKS = {
-  // ── TicketSir ───────────────────────────────────────
-  T01:{n:"TicketSir Bug Fixes (gate close, age desc on PDF)",o:"Rishabh",s:"Not Started",p:0,  start:"2026-02-13",end:"2026-02-13",dep:[]},
-  T02:{n:"7998 – Pre-sale & Waitlist Booking (Mobile App)",  o:"Jayant", s:"Completed",  p:100,start:"2026-02-24",end:"2026-02-24",dep:[]},
-  T03:{n:"Label Changes",                                    o:"Jayant", s:"Completed",  p:100,start:"2026-02-24",end:"2026-02-24",dep:[]},
-  T04:{n:"7839 – Biometric Login (TicketSir & Cokobar App)", o:"Jayant", s:"In Progress",p:95, start:"2026-02-10",end:"2026-03-24",dep:[]},
-  T05:{n:"7923 – DB Migration of TicketSir",                 o:"Rishabh",s:"In Progress",p:80, start:"2026-03-03",end:"2026-04-10",dep:[]},
-
-  // ── Rhemito – Bug Fixes (8058) ──────────────────────
-  T06:{n:"8058 Bug Fixes – Backend",                         o:"Rishabh",s:"Completed",  p:100,start:"2026-02-06",end:"2026-02-06",dep:[]},
-  T07:{n:"8058 Bug Fixes – Front end: Web",                  o:"Monu",   s:"Completed",  p:100,start:"2026-02-19",end:"2026-03-02",dep:["T06"]},
-  T08:{n:"8058 Bug Fixes – Mobile App",                      o:"Jayant", s:"Completed",  p:100,start:"2026-02-25",end:"2026-03-06",dep:["T02","T03"]},
-
-  // ── Rhemito – Notifications ─────────────────────────
-  T09:{n:"Notifications – Backend",                          o:"Rishabh",s:"In Progress",p:70, start:"2026-04-10",end:"2026-04-10",dep:[]},
-  T10:{n:"Notifications – Front end: Web",                   o:"Monu",   s:"Completed",  p:100,start:"2026-04-02",end:"2026-04-03",dep:[]},
-  T11:{n:"Notifications – Mobile App",                       o:"Jayant", s:"Completed",  p:100,start:"2026-03-25",end:"2026-04-10",dep:["T04"]},
-
-  // ── Rhemito – Other ─────────────────────────────────
-  T12:{n:"7744 – Pay by Bank & Bank Transfer (New Customers)",o:"Vakil", s:"Not Started",p:0,  start:"2026-02-19",end:"2026-02-19",dep:[]},
-  T13:{n:"Rhemito Mobile App – Help Tickets",                o:"Jayant", s:"Completed",  p:100,start:"2026-03-26",end:"2026-04-10",dep:[]},
-  T14:{n:"Mobile App – Manual Bank Transfer Flow",           o:"Jayant", s:"Not Started",p:0,  start:"2026-04-15",end:"2026-04-20",dep:[]},
-  T15:{n:"8057 – KYC Bug Fixes",                             o:"Vakil",  s:"Not Started",p:0,  start:"2026-02-19",end:"2026-02-19",dep:[]},
-
-  // ── Affiliate Dashboard (7986 OnePipe) ──────────────
-  T16:{n:"7986 – Frontend: Web",                             o:"Monu",   s:"Not Started",p:0,  start:"2026-02-12",end:"2026-02-12",dep:[]},
-  T17:{n:"7986 – Backend",                                   o:"Sakshi", s:"Completed",  p:100,start:"2026-02-12",end:"2026-02-12",dep:[]},
-  T18:{n:"7986 – Design",                                    o:"Iyanu",  s:"Not Started",p:0,  start:"2026-02-12",end:"2026-02-12",dep:[]},
-  T19:{n:"OnePipe Enhancement (KYC after 1st TXN, Session mgmt)",o:"Vakil",s:"In Progress",p:90,start:"2026-02-19",end:"2026-04-20",dep:["T48"]},
-
-  // ── Role Based Login (7996) ─────────────────────────
-  T20:{n:"7996 – Backend",                                   o:"Sakshi", s:"Completed",  p:100,start:"2026-02-19",end:"2026-03-24",dep:[]},
-  T21:{n:"7996 – Frontend",                                  o:"Monu",   s:"Completed",  p:100,start:"2026-02-19",end:"2026-03-03",dep:[]},
-
-  // ── OBO ─────────────────────────────────────────────
-  T22:{n:"OBO – Frontend",                                   o:"Monu",   s:"In Progress",p:60, start:"2026-02-19",end:"2026-04-17",dep:[]},
-  T23:{n:"OBO – Backend",                                    o:"Rishabh",s:"Completed",  p:100,start:"2026-02-19",end:"2026-04-01",dep:[]},
-
-  // ── Rate Manager ────────────────────────────────────
-  T24:{n:"Rate Manager – Frontend",                          o:"Monu",   s:"In Progress",p:59, start:"2026-02-19",end:"2026-04-22",dep:["T22"]},
-  T25:{n:"Rate Manager – Backend: Config Setup",             o:"Sakshi", s:"Completed",  p:100,start:"2026-03-09",end:"2026-03-16",dep:[]},
-  T26:{n:"Rate Manager – Backend: Overrides",                o:"Sakshi", s:"Completed",  p:100,start:"2026-03-17",end:"2026-03-24",dep:[]},
-  T27:{n:"Rate Manager – Backend: Cross Rates",              o:"Sakshi", s:"In Progress",p:60, start:"2026-03-25",end:"2026-04-17",dep:[]},
-  T28:{n:"Rate Manager – Backend: Existing Affiliate Migration",o:"Sakshi",s:"Not Started",p:0,start:"2026-04-20",end:"2026-05-04",dep:["T27"]},
-
-  // ── Customer Support Portal ─────────────────────────
-  T29:{n:"Customer Support – Front end",                     o:"Monu",   s:"Completed",  p:100,start:"2026-03-25",end:"2026-04-09",dep:[]},
-  T30:{n:"Customer Support – Backend",                       o:"Rishabh",s:"Completed",  p:100,start:"2026-03-25",end:"2026-03-30",dep:[]},
-
-  // ── Affiliate Operations ────────────────────────────
-  T31:{n:"AirPeace Payment Pages / V2 Changes",              o:"Vakil",  s:"Completed",  p:100,start:"2026-02-19",end:"2026-02-19",dep:[]},
-  T32:{n:"Refund Enhancement",                               o:"Vakil",  s:"In Progress",p:99, start:"2026-04-01",end:"2026-05-18",dep:[]},
-  T33:{n:"Account Switching: Business ↔ Individual",         o:"Vakil",  s:"Not Started",p:0,  start:"2026-02-25",end:"2026-02-26",dep:[]},
-  T34:{n:"Interswitch-Payout",                               o:"Sakshi", s:"In Progress",p:90, start:"2025-11-15",end:"2026-02-24",dep:[]},
-  T35:{n:"Flex POC (Frontend)",                              o:"Monu",   s:"In Progress",p:50, start:"2026-04-14",end:"2026-04-15",dep:[]},
-  T36:{n:"FLEX – Backend",                                   o:"Sakshi", s:"In Progress",p:50, start:"2026-04-14",end:"2026-05-15",dep:[]},
-  T37:{n:"Affiliate Coordination",                           o:"Sakshi", s:"In Progress",p:50, start:"2026-04-10",end:"2026-04-10",dep:[]},
-
-  // ── MITO-Admin ──────────────────────────────────────
-  T38:{n:"7811 – Movement to Retail Submission: Bug Fixes",  o:"Sakshi", s:"Completed",  p:100,start:"2026-02-19",end:"2026-02-19",dep:[]},
-
-  // ── Testing (QA) ────────────────────────────────────
-  T39:{n:"7925 – Interswitch Testing",                       o:"Robin",  s:"In Progress",p:60, start:"2026-03-20",end:"2026-04-03",dep:["T34"]},
-  T40:{n:"8002 – TicketSir Pre-sale & Waitlist App Testing", o:"Robin",  s:"Completed",  p:100,start:"2026-02-25",end:"2026-02-25",dep:["T02"]},
-  T41:{n:"8054 – Date Caption Changes Testing",              o:"Robin",  s:"Not Started",p:0,  start:"2026-02-26",end:"2026-02-26",dep:["T40"]},
-  T42:{n:"Role Based Login Testing",                         o:"Robin",  s:"Completed",  p:100,start:"2026-03-13",end:"2026-03-24",dep:["T20","T21"]},
-  T43:{n:"OBO Testing",                                      o:"Robin",  s:"In Progress",p:50, start:"2026-03-18",end:"2026-04-14",dep:["T22","T23"]},
-  T44:{n:"Help Tickets Web Testing",                         o:"Robin",  s:"Completed",  p:100,start:"2026-04-03",end:"2026-04-09",dep:["T29"]},
-  T45:{n:"Help Tickets App Testing",                         o:"Robin",  s:"Completed",  p:100,start:"2026-04-08",end:"2026-04-09",dep:["T13"]},
-  T46:{n:"TicketSir DB Migration Testing",                   o:"Robin",  s:"In Progress",p:80, start:"2026-03-13",end:"2026-04-15",dep:["T05"]},
-  T47:{n:"Flex POC Testing",                                 o:"Robin",  s:"In Progress",p:20, start:"2026-02-19",end:"2026-04-16",dep:["T35"]},
-
-  // ── Integrations ────────────────────────────────────
-  T48:{n:"Plaid for Rhemito",                                o:"Vakil",  s:"In Progress",p:50, start:"2026-04-14",end:"2026-04-16",dep:[]},
-  T49:{n:"Mobile App Platform & Environment Update",         o:"Jayant", s:"Completed",  p:100,start:"2026-04-10",end:"2026-04-15",dep:[]},
+  T01:{n:"TicketSir Bug Fixes",o:"Rishabh",s:"Completed",p:100,start:"2026-02-27",end:"2026-02-27",dep:[]},
+  T02:{n:"7998 – TicketSir (Pre sale & Waitlist Booking)-Mobile App",o:"Jayant",s:"Completed",p:100,start:"2026-02-24",end:"2026-02-24",dep:["T02"]},
+  T03:{n:" Label changes",o:"Jayant",s:"Completed",p:100,start:"2026-02-24",end:"2026-02-24",dep:["T03"]},
+  T04:{n:"7839 – Biometric Login (TicketSir & Cokobar)-Mobile App",o:"Jayant",s:"In Progress",p:95,start:"2026-02-10",end:"2026-03-24",dep:["T04"]},
+  T05:{n:"7923 – DB Migration of TicketSir",o:"Rishabh",s:"In Progress",p:80,start:"2026-03-03",end:"2026-05-01",dep:[]},
+  T06:{n:"8058: Rhemito bug fixes",o:"",s:"Completed",p:100,start:"2026-02-19",end:"2026-03-06",dep:[]},
+  T07:{n:"Backend",o:"Rishabh",s:"Completed",p:100,start:"2026-02-06",end:"2026-02-06",dep:[]},
+  T08:{n:"Front end: Web",o:"Monu",s:"Completed",p:100,start:"2026-02-19",end:"2026-03-02",dep:[]},
+  T09:{n:"Rhemito bug fixes: Mobile App",o:"Jayant",s:"Completed",p:100,start:"2026-02-25",end:"2026-03-06",dep:["T02","T03"]},
+  T10:{n:"Notification",o:"",s:"Completed",p:100,start:"2026-03-25",end:"2026-04-10",dep:[]},
+  T11:{n:"Backend",o:"Rishabh",s:"Completed",p:100,start:"2026-04-10",end:"2026-04-10",dep:[]},
+  T12:{n:"Front end: web",o:"Monu",s:"Completed",p:100,start:"2026-04-02",end:"2026-04-03",dep:[]},
+  T13:{n:"Mobile App",o:"Jayant",s:"Completed",p:100,start:"2026-03-25",end:"2026-04-10",dep:["T04"]},
+  T14:{n:"Mobile App: Manual Bank Transfer Flow",o:"Jayant",s:"Completed",p:100,start:"2026-04-15",end:"2026-04-28",dep:[]},
+  T15:{n:"Web: Manual Bank Transfer",o:"Monu",s:"Completed",p:100,start:"2026-04-20",end:"2026-04-24",dep:[]},
+  T16:{n:"Backend",o:"Rishabh",s:"Not Started",p:0,start:"2025-09-30",end:"2025-09-30",dep:[]},
+  T17:{n:"Web Frontend",o:"Monu",s:"Not Started",p:0,start:"2025-09-30",end:"2025-09-30",dep:[]},
+  T18:{n:"Mobile App",o:"Jayant",s:"Not Started",p:0,start:"2025-09-30",end:"2025-09-30",dep:[]},
+  T19:{n:"Frontend: web",o:"Monu",s:"Not Started",p:0,start:"2026-02-12",end:"2026-02-12",dep:[]},
+  T20:{n:"Backend",o:"Sakshi",s:"Completed",p:100,start:"2026-02-12",end:"2026-02-12",dep:[]},
+  T21:{n:"Design",o:"Iyanu",s:"Not Started",p:0,start:"2026-02-12",end:"2026-02-12",dep:[]},
+  T22:{n:"OnePipe Enhancement",o:"Vakil",s:"In Progress",p:90,start:"2026-02-19",end:"2026-05-05",dep:["T53"]},
+  T23:{n:"Biller Setup for Onepipe",o:"Sakshi",s:"In Progress",p:30,start:"2026-04-29",end:"2026-05-01",dep:[]},
+  T24:{n:"Backend",o:"Sakshi",s:"Completed",p:100,start:"2026-02-19",end:"2026-03-24",dep:[]},
+  T25:{n:"Frontend",o:"Monu",s:"Completed",p:100,start:"2026-02-19",end:"2026-03-03",dep:[]},
+  T26:{n:"Frontend",o:"Monu",s:"In Progress",p:60,start:"2026-02-19",end:"2026-05-27",dep:["T28"]},
+  T27:{n:"Backend",o:"Rishabh",s:"Completed",p:100,start:"2026-02-19",end:"2026-04-01",dep:[]},
+  T28:{n:"Frontend",o:"Monu",s:"In Progress",p:65,start:"2026-02-19",end:"2026-05-04",dep:["T28"]},
+  T29:{n:"Backend-Config Setup",o:"Sakshi",s:"Completed",p:100,start:"2026-03-09",end:"2026-03-16",dep:[]},
+  T30:{n:"Backend-Overrides",o:"Sakshi",s:"Completed",p:100,start:"2026-03-17",end:"2026-03-24",dep:[]},
+  T31:{n:"Backend-Cross Rates",o:"Sakshi",s:"In Progress",p:80,start:"2026-03-25",end:"2026-04-29",dep:["T31"]},
+  T32:{n:"Backend-Existing Affiliate Migration",o:"Sakshi",s:"Not Started",p:0,start:"2026-04-30",end:"2026-05-14",dep:["T31"]},
+  T33:{n:"Front end",o:"Monu",s:"Completed",p:100,start:"2026-03-25",end:"2026-04-09",dep:[]},
+  T34:{n:"Backend",o:"Rishabh",s:"Completed",p:100,start:"2026-03-25",end:"2026-03-30",dep:[]},
+  T35:{n:"AirPeace Payment Pages/V2 changes",o:"Vakil",s:"Completed",p:100,start:"2026-02-19",end:"2026-02-19",dep:[]},
+  T36:{n:"Refund Enhancement",o:"Vakil",s:"In Progress",p:99,start:"2026-04-01",end:"2026-05-18",dep:[]},
+  T37:{n:"Account Switching: Business<->Individual",o:"Vakil",s:"Not Started",p:0,start:"2026-02-25",end:"2026-02-26",dep:[]},
+  T38:{n:"Interswitch-Payout",o:"Sakshi",s:"In Progress",p:90,start:"2025-11-15",end:"2026-02-24",dep:[]},
+  T39:{n:"Flex POC",o:"Monu",s:"Completed",p:100,start:"2026-04-14",end:"2026-04-22",dep:["T39"]},
+  T40:{n:"FLEX-Backend",o:"Sakshi",s:"In Progress",p:50,start:"2026-04-14",end:"2026-05-15",dep:[]},
+  T41:{n:"Affiliate Coordination",o:"Sakshi",s:"In Progress",p:50,start:"2026-04-10",end:"2026-04-10",dep:[]},
+  T42:{n:"7811 – Movement to Retail Submission: Bug Fixes",o:"Sakshi",s:"Completed",p:100,start:"2026-02-19",end:"2026-02-19",dep:[]},
+  T43:{n:"Config..Sttic Pages",o:"Sakshi",s:"In Progress",p:30,start:"2026-05-01",end:"2026-07-01",dep:[]},
+  T44:{n:"7925 – Interswitch ",o:"Robin",s:"In Progress",p:50,start:"2026-03-20",end:"2026-04-30",dep:[]},
+  T45:{n:"8002: (App) Ticketsir: booking for pre sale and waitlist app",o:"Robin",s:"Completed",p:100,start:"2026-02-25",end:"2026-02-25",dep:["T45"]},
+  T46:{n:"8054: Date Caption changes",o:"Robin",s:"Completed",p:100,start:"2026-02-26",end:"2026-02-26",dep:["T45"]},
+  T47:{n:"Role based",o:"Robin",s:"Completed",p:100,start:"2026-03-13",end:"2026-03-24",dep:[]},
+  T48:{n:"OBO",o:"Robin",s:"In Progress",p:30,start:"2026-03-18",end:"2026-05-08",dep:[]},
+  T49:{n:"Help Tickets Web",o:"Robin",s:"Completed",p:100,start:"2026-04-03",end:"2026-04-09",dep:[]},
+  T50:{n:"Help Tickets App",o:"Robin",s:"Completed",p:100,start:"2026-04-08",end:"2026-04-09",dep:[]},
+  T51:{n:"Ticketsir DB Migration",o:"Robin",s:"In Progress",p:80,start:"2026-03-13",end:"2026-04-15",dep:[]},
+  T52:{n:"Flex POC",o:"Robin",s:"Completed",p:100,start:"2026-02-19",end:"2026-04-27",dep:["T39"]},
+  T53:{n:"Plaid for Rhemito",o:"Vakil",s:"In Progress",p:65,start:"2026-04-14",end:"2026-05-01",dep:["T53"]},
+  T54:{n:"SDK-MITO",o:"Vakil",s:"In Progress",p:90,start:"2026-04-24",end:"2026-04-29",dep:[]},
+  T55:{n:"Mobile App Platform and Environment Update",o:"Jayant",s:"Completed",p:100,start:"2026-04-10",end:"2026-04-15",dep:[]},
 };
 
 // ── BUILD TABLE ──────────────────────────────────────────────────────────────
